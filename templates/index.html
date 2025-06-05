@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Secure Blockchain Voting</title>
+  <script>
+    async function submitVote() {
+      const vote = document.querySelector('input[name="vote"]:checked')?.value;
+      const salt = document.getElementById("salt").value;
+      if (!vote || !salt) {
+        alert("Please select a candidate and enter a salt.");
+        return;
+      }
+      const response = await fetch("/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ vote, salt })
+      });
+      const result = await response.json();
+      document.getElementById("result").innerText = result.receipt ? "Receipt: " + result.receipt : result.error;
+    }
+
+    async function verifyVote() {
+      const salt = document.getElementById("verify_salt").value;
+      if (!salt) {
+        alert("Please enter your salt to verify.");
+        return;
+      }
+      const response = await fetch("/verify", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ salt })
+      });
+      const result = await response.json();
+      document.getElementById("verify_result").innerText = result.valid ? "Your vote was securely recorded in the blockchain." : "No matching vote found.";
+    }
+  </script>
+</head>
+<body>
+  <h1>Blockchain Vote</h1>
+  <label><input type="radio" name="vote" value="A"> Candidate A</label><br>
+  <label><input type="radio" name="vote" value="B"> Candidate B</label><br>
+  <input type="text" id="salt" placeholder="Enter your secret salt"><br>
+  <button onclick="submitVote()">Submit Vote</button>
+  <p id="result"></p>
+
+  <h2>Verify Your Vote Inclusion</h2>
+  <input type="text" id="verify_salt" placeholder="Enter your secret salt"><br>
+  <button onclick="verifyVote()">Verify</button>
+  <p id="verify_result"></p>
+</body>
+</html>

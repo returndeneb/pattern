@@ -1,4 +1,4 @@
-# pattern# Simple E-Voting PoC (Blockchain 기반)
+# Simple E-Voting PoC (Blockchain 기반)
 
 이 프로젝트는 **비밀 투표 보장**과 **투표 조작 불가능성**을 동시에 추구하는 \*\*전자 투표 시스템 PoC(Proof of Concept)\*\*입니다. 핵심은 투표 내용을 암호화(commitment)하고 이를 블록체인에 기록함으로써, 본인조차도 누구에게 투표했는지 드러나지 않도록 하면서도, 각 유권자가 자신의 투표가 훼손 없이 반영되었는지를 검증할 수 있도록 합니다.
 
